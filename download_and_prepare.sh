@@ -1,9 +1,11 @@
 #!/bin/bash
 
+# TODO: Move this functionality into Python
 url="https://www.reddit.com/r/TikTokCringe/hot.json?limit=2"
 user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko/20100101 Firefox/109.0"
-# TODO: Get rid of not items that are not videos
-youtube-dl $(curl -s -H "User-Agent: $user_agent" "$url" | jq '.' | grep url_overridden_by_dest | grep -Eoh "https:\/\/v\.redd\.it\/\w{13}")
+json_response=$(curl -s -H "User-Agent: $user_agent" "$url")
+video_urls=$(python -m find_videos --json "$json_response")
+youtube-dl $(echo "$video_urls")
 
 mkdir blured_vids
 for f in *.mp4;
