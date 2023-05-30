@@ -11,4 +11,7 @@ do
 done
 
 rm *.mp4
-for f in blured_vids/*.mp4; do echo "file $f" >> file_list.txt; done
+for f in blured_vids/*.mp4;
+do
+  echo "file $f" >> file_list.txt;
+done
