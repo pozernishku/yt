@@ -9,6 +9,7 @@ readme = "README.md"
 python = "^3.11"
 python-dotenv = "^1.0.0"
 jmespath = "^1.0.1"
+youtube-dl = "^2021.12.17"
 
 
 [tool.poetry.group.test.dependencies]
