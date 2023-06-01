@@ -2,8 +2,7 @@
 
 # TODO: Move this functionality into pure Python
 url="https://www.reddit.com/r/TikTokCringe/hot.json?limit=2"
-reddit_video_urls=$(python -m reddit --url "$url")
-youtube-dl $(echo "$reddit_video_urls")
+python -m download --url "$url"
 
 mkdir blured_vids
 for f in *.mp4;
