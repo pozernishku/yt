@@ -13,6 +13,6 @@ if __name__ == "__main__":
     if not reddit.video_urls:
         raise Exception("No videos found")
 
-    ydl_opts = {}
+    ydl_opts = {"outtmpl": "%(epoch)s-%(title)s-%(id)s.%(ext)s"}
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
         ydl.download(reddit.video_urls)
