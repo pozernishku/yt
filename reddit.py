@@ -25,6 +25,8 @@ class Reddit:
 
     def get_video_urls(self) -> list[str] | None:
         # TODO: Get also cross-post video items
-        jpath = "data.children[?data.is_video == `true`].data.url_overridden_by_dest"
+        is_video = "data.is_video == `true`"
+        has_audio = "data.media.reddit_video.has_audio == `true`"
+        jpath = f"data.children[?{is_video} && {has_audio}].data.url_overridden_by_dest"
         video_urls = jmespath.search(jpath, self.json_data)
         return video_urls
