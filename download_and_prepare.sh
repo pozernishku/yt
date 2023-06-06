@@ -9,7 +9,15 @@ for f in *.mp4;
 do
   # TODO: Try to do it using multiprocessing (looks like it's already multiprocessing)
   # TODO: Update the command below. It should work on video without audio stream as well
-  ffmpeg -hide_banner -i "$f" -lavfi '[0:v]scale=ih*16/9:-1,boxblur=luma_radius=min(h\,w)/20:luma_power=1:chroma_radius=min(cw\,ch)/20:chroma_power=1[bg];[bg][0:v]overlay=(W-w)/2:(H-h)/2,crop=h=iw*9/16' -vb 800K blured_vids/"$f";
+  scale="ih*16/9:-1"
+  boxblur="luma_radius=min(h\,w)/20:luma_power=1:chroma_radius=min(cw\,ch)/20:chroma_power=1[bg]"
+  overlay="(W-w)/2:(H-h)/2"
+  crop="h='if(gte(iw*9/16,ih),ih-1,iw*9/16)'"
+  if ! ffmpeg -hide_banner -i "$f" -lavfi "[0:v]scale=$scale,boxblur=$boxblur;[bg][0:v]overlay=$overlay,crop=$crop" -vb 800K blured_vids/"$f";
+  then
+    mv -f "$f" blured_vids/"$f";
+    echo "Moved $f into blured_vids/ without changes"
+  fi
 done
 
 rm *.mp4
