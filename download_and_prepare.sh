@@ -13,7 +13,7 @@ do
   boxblur="luma_radius=min(h\,w)/20:luma_power=1:chroma_radius=min(cw\,ch)/20:chroma_power=1[bg]"
   overlay="(W-w)/2:(H-h)/2"
   crop="h='if(gte(iw*9/16,ih),ih-1,iw*9/16)'"
-  ffmpeg -hide_banner -i "$f" -lavfi "[0:v]scale=$scale,boxblur=$boxblur;[bg][0:v]overlay=$overlay,crop=$crop" -b:v 1M blured_vids/"$f";
+  ffmpeg -hide_banner -i "$f" -filter_complex "[0:v]scale=$scale,boxblur=$boxblur;[bg][0:v]overlay=$overlay,crop=$crop" -b:v 1M blured_vids/"$f";
 done
 
 rm *.mp4
